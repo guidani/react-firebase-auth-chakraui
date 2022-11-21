@@ -1,7 +1,15 @@
-import React from 'react'
+import { Box } from "@chakra-ui/react";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 
 export const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <>
+      <Box marginBottom="4">
+        <Navbar />
+      </Box>
+      <Outlet />
+    </>
+  );
+};
