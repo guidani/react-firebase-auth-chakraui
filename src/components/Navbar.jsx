@@ -1,4 +1,5 @@
 import { Box, Flex, Link } from "@chakra-ui/react";
+import { Link as RouterDomLink } from 'react-router-dom'
 import React from "react";
 
 export const Navbar = () => {
@@ -16,7 +17,7 @@ export const Navbar = () => {
           >
             Página Inicial
           </Link>
-          <Link bg="teal.500" color="white" p="2" borderRadius="4" href="#">
+          <Link as={RouterDomLink} to='/administrativo' bg="teal.500" color="white" p="2" borderRadius="4">
             Administrativo
           </Link>
         </Box>
