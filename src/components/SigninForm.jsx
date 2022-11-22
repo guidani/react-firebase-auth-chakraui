@@ -26,7 +26,6 @@ export const SigninForm = () => {
     },
   });
   const onSubmit = async (data) => {
-    // console.log(data);
     try {
       await logInWithEmailAndPassword(data.email, data.password);
       navigate("/dashboard");
