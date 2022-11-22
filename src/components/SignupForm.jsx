@@ -35,7 +35,6 @@ export const SignupForm = () => {
       await registerWithEmailAndPassword(data.email, data.password);
       navigate('/');
     } catch (error) {
-      // console.log(error.code);
       setHasError(true);
       if (error.code === "auth/email-already-in-use") {
         console.log("Já existe um email igual cadastrado.");
