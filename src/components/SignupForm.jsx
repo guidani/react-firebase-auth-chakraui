@@ -6,10 +6,16 @@ import {
   Input,
   Stack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../hooks/useUserAuth";
 
 export const SignupForm = () => {
+  const { registerWithEmailAndPassword } = useUserAuth();
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -22,7 +28,22 @@ export const SignupForm = () => {
       confirmPassword: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    setHasError(false);
+    try {
+      await registerWithEmailAndPassword(data.email, data.password);
+      navigate('/');
+    } catch (error) {
+      // console.log(error.code);
+      setHasError(true);
+      if (error.code === "auth/email-already-in-use") {
+        console.log("Já existe um email igual cadastrado.");
+        setErrorMessage("Já existe um email igual cadastrado.");
+      }
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl isRequired>
@@ -38,9 +59,12 @@ export const SignupForm = () => {
             width="auto"
             variant="outline"
           />
-          <FormErrorMessage>
-            {errors.email && errors.email.message}
-          </FormErrorMessage>
+          {errors.email ? <p>Preencha com um e-mail</p> : null}
+          {hasError && (
+            <>
+              <p>{errorMessage}</p>
+            </>
+          )}
           {/*  */}
           <FormLabel>Senha</FormLabel>
           <Input

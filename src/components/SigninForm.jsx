@@ -8,8 +8,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../hooks/useUserAuth";
 
 export const SigninForm = () => {
+  const { logInWithEmailAndPassword } = useUserAuth();
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -21,7 +25,15 @@ export const SigninForm = () => {
       password: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      await logInWithEmailAndPassword(data.email, data.password);
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl isRequired>
