@@ -19,7 +19,6 @@ export const SigninForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
   const onSubmit = (data) => console.log(data);
