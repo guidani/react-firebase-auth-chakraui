@@ -17,6 +17,7 @@ export const Dashboard = () => {
       console.log(error);
     }
   };
+  
   return (
     <>
       <Box marginBottom="4">

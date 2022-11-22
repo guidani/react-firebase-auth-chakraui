@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { MainLayout } from "../components/layouts/MainLayout";
 import { ProtectedRoute } from "../components/ProtectedRoute";
+import { RequireAuth } from "../components/RequireAuth";
 import { Administrative } from "../views/Administrative";
 import { App } from "../views/App";
 import { Dashboard } from "../views/Dashboard";
@@ -17,15 +17,15 @@ export const AppRouter = () => {
         <Route index element={<Signin />} />
         <Route path="register" element={<Signup />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="" element={<Errorpage />} />
+        <Route path="*" element={<Errorpage />} />
 
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/administrativo" element={<Administrative />} />
-          </Route>
+        <Route element={<RequireAuth />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/administrativo" element={<Administrative />} />
+            </Route>
         </Route>
-        </Route>
+      </Route>
     </Routes>
   );
 };
