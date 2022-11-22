@@ -12,9 +12,9 @@ export const Navbar = ({ handleLogOut, user }) => {
             color="white"
             p="2"
             borderRadius="4"
-            href="/dashboard"
             marginRight="2"
             as={RouterDomLink}
+            to="/dashboard"
           >
             Página Inicial
           </Link>
