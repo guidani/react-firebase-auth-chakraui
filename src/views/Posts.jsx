@@ -1,16 +1,33 @@
 import { Box, Text } from "@chakra-ui/react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useUserAuth } from "../hooks/useUserAuth";
 import { db } from "../services/firebase/firebase-config";
 
 export const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [errors, setErrors] = useState("");
+  const { user } = useUserAuth();
+
+  async function isAdmin(){
+    const userId = user.uid;
+    console.log(userId);
+    //
+    const docRef = doc(db, "admins", `${userId}`);
+    const docSnap = await getDoc(docRef);
+    if(docSnap.exists()){
+      console.log("Data: ", docSnap.data());
+    } else {
+      console.log('Documento não existe.');
+    }
+  }
 
   async function getAllPosts() {
     try {
       let temp = [];
-      const collectionRef = await collection(db, "posts");
+      const collectionRef = collection(db, "posts");
       const querySnapshot = await getDocs(collectionRef);
+      if (querySnapshot.empty) return;
       querySnapshot.forEach((doc) => {
         const post = {
           id: doc.id,
@@ -23,11 +40,14 @@ export const Posts = () => {
       });
       console.log(temp);
     } catch (error) {
-      console.log(error);
+      console.log("Permissão negada!");
+        setErrors("Desculpe. Ocorreu um erro inesperado!");
     }
   }
 
+
   useEffect(() => {
+    isAdmin();
     getAllPosts();
   }, []);
   return (
@@ -41,6 +61,7 @@ export const Posts = () => {
             <>
               <Text as="p" fontSize="2xl" align="center">
                 Não há nada para ser exibido
+                {errors ? <p>Você não tem permissão</p> : ""}
               </Text>
             </>
           ) : (
