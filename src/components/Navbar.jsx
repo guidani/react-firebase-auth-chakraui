@@ -26,8 +26,19 @@ export const Navbar = ({ handleLogOut, user }) => {
             color="white"
             p="2"
             borderRadius="4"
+            marginRight="2"
           >
             Administrativo
+          </Link>
+          <Link
+            as={RouterDomLink}
+            to="/posts"
+            bg="teal.500"
+            color="white"
+            p="2"
+            borderRadius="4"
+          >
+            Posts
           </Link>
         </Box>
         {user && <Text>Bem-vindo(a): {user.email}</Text>}

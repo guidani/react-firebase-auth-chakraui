@@ -6,23 +6,23 @@ import { UserDataTable } from "../components/UserDataTable";
 import { useUserAuth } from "../hooks/useUserAuth";
 
 export const Dashboard = () => {
-  const { logOut, user } = useUserAuth();
-  const navigate = useNavigate();
+  // const { logOut, user } = useUserAuth();
+  // const navigate = useNavigate();
 
-  const handleLogOut = async () => {
-    try {
-      await logOut();
-      navigate('/')
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleLogOut = async () => {
+  //   try {
+  //     await logOut();
+  //     navigate('/')
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   
   return (
     <>
-      <Box marginBottom="4">
+      {/* <Box marginBottom="4">
         <Navbar handleLogOut={handleLogOut} user={user}/>
-      </Box>
+      </Box> */}
       <UserDataTable />
     </>
   );
