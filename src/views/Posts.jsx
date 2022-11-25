@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import { collection, doc, getDoc, getDocs, } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useUserAuth } from "../hooks/useUserAuth";
 import { db } from "../services/firebase/firebase-config";
@@ -9,16 +9,18 @@ export const Posts = () => {
   const [errors, setErrors] = useState("");
   const { user } = useUserAuth();
 
-  async function isAdmin(){
+  async function isAdmin() {
     const userId = user.uid;
     console.log(userId);
     //
     const docRef = doc(db, "admins", `${userId}`);
     const docSnap = await getDoc(docRef);
-    if(docSnap.exists()){
+    if (docSnap.exists()) {
       console.log("Data: ", docSnap.data());
+      return true;
     } else {
-      console.log('Documento não existe.');
+      console.log("Documento não existe.");
+      return false;
     }
   }
 
@@ -41,10 +43,9 @@ export const Posts = () => {
       console.log(temp);
     } catch (error) {
       console.log("Permissão negada!");
-        setErrors("Desculpe. Ocorreu um erro inesperado!");
+      setErrors("Desculpe. Ocorreu um erro inesperado!");
     }
   }
-
 
   useEffect(() => {
     isAdmin();
@@ -69,10 +70,12 @@ export const Posts = () => {
               {posts.map((item, index) => {
                 return (
                   <div key={index}>
-                    <p>ID: {item.id}</p>
-                    <p>UserID: {item.userid}</p>
-                    <p>Title: {item.title}</p>
-                    <p>Body: {item.body}</p>
+                    <Box p='4' bg='white' m='2'>
+                      <p>ID: {item.id}</p>
+                      <p>UserID: {item.userid}</p>
+                      <p>Title: {item.title}</p>
+                      <p>Body: {item.body}</p>
+                    </Box>
                   </div>
                 );
               })}
