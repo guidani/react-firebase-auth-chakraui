@@ -1,23 +1,30 @@
-import { Box, Text } from "@chakra-ui/react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { Box, Button, Text } from "@chakra-ui/react";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { UserDataTable } from "../components/UserDataTable";
 import { useUserAuth } from "../hooks/useUserAuth";
 import { db } from "../services/firebase/firebase-config";
 
 export const Dashboard = () => {
-  const {user} = useUserAuth()
-  const [posts, setPosts] = useState([])
+  const { user } = useUserAuth();
+  const [posts, setPosts] = useState([]);
 
   async function getPostsFromCurrentUser() {
     // console.log(userId);
-    try{
+    try {
       let temp = [];
       const userId = user.uid;
       const postsRef = await collection(db, "posts");
       const q = query(postsRef, where("userid", "==", `${userId}`));
       const querySnapshot = await getDocs(q);
-      if(querySnapshot.empty) return;
+      if (querySnapshot.empty) return;
       querySnapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data());
         const post = {
@@ -29,11 +36,17 @@ export const Dashboard = () => {
         temp.push(post);
         setPosts(temp);
       });
-    } catch (error){
+    } catch (error) {
       console.log(error);
     }
+  }
 
-    
+  async function deletePost(postid) {
+    try {
+      return await deleteDoc(doc(db, "posts", postid));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -61,11 +74,18 @@ export const Dashboard = () => {
               {posts.map((item, index) => {
                 return (
                   <div key={index}>
-                    <Box p='4' bg='white' m='2'>
+                    <Box p="4" bg="white" m="2">
                       <p>ID: {item.id}</p>
                       <p>UserID: {item.userid}</p>
                       <p>Title: {item.title}</p>
                       <p>Body: {item.body}</p>
+                      <Button
+                        bg="red.400"
+                        color="whiteAlpha.900"
+                        onClick={() => deletePost(item.id)}
+                      >
+                        Deletar
+                      </Button>
                     </Box>
                   </div>
                 );
