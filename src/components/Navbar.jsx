@@ -43,6 +43,17 @@ export const Navbar = ({ handleLogOut, user }) => {
         </Box>
         {user && <Text>Bem-vindo(a): {user.email}</Text>}
         <Box>
+        <Link
+            as={RouterDomLink}
+            to="/new-post"
+            bg="teal.500"
+            color="white"
+            p="2"
+            borderRadius="4"
+            marginRight='2'
+          >
+            Novo Post
+          </Link>
           <Link
             bg="teal.500"
             color="white"
@@ -52,6 +63,7 @@ export const Navbar = ({ handleLogOut, user }) => {
           >
             Sair
           </Link>
+          
         </Box>
       </Flex>
     </>

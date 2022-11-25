@@ -8,6 +8,7 @@ import { App } from "../views/App";
 import { Dashboard } from "../views/Dashboard";
 import { Errorpage } from "../views/Errorpage";
 import { ForgotPassword } from "../views/ForgotPassword";
+import { NewPost } from "../views/NewPost";
 import { Posts } from "../views/Posts";
 import { Signin } from "../views/Signin";
 import { Signup } from "../views/Signup";
@@ -24,6 +25,7 @@ export const AppRouter = () => {
 
         <Route element={<RequireAuth />}>
           <Route path="/posts" element={<Posts/>}/>
+          <Route path="/new-post" element={<NewPost/>}/>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/administrativo" element={<Administrative />} />
