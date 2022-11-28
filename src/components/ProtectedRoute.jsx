@@ -1,10 +1,10 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useUserAuth } from "../hooks/useUserAuth";
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = () => {
   const { user } = useUserAuth();
 
   if (!user) return <Navigate to="/dashboard" replace />;
-  return children;
+  return <Outlet />;
 };
