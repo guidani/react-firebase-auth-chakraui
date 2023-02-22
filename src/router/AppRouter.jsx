@@ -22,9 +22,9 @@ export const AppRouter = () => {
         </Route>
 
         <Route element={<RequireAuth />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/administrativo" element={<Administrative />} />
+            <Route path="administrativo" element={<Administrative />} />
           </Route>
         </Route>
         <Route path="*" element={<Errorpage />} />
