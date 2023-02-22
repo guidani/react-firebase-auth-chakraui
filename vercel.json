@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "source": "/[^.]+",
+      "destination": "/",
+      "status": 200
+    }
+  ]
+}
